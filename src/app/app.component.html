@@ -1,0 +1,77 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+        <div class="form-group">
+            <label for="search">Desde</label>
+            <input [(ngModel)]="minMesa" type="number" class="form-control" id="search" placeholder="mesa" min="1001">
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label for="search">Hasta</label>
+            <input [(ngModel)]="maxMesa" type="number" class="form-control" id="search" placeholder="mesa" min="1001">
+        </div>
+    </div>
+    
+    <div class="col-2">
+        <button type="button" class="btn btn-primary my-4" (click)="search()">Buscar</button>
+    </div>
+
+    <div class="col-4">
+        <div class="input-group mb-3 my-4">
+          <label for="search">CI del elector</label>
+          <input [(ngModel)]="ci" type="number" class="form-control" id="search" placeholder="mesa" min="1">
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary" type="button" (click)="searchByCI()">Buscar por CI</button>
+            </div>
+          </div>
+    </div>
+    
+  </div>
+  <div class="row text-center bg-dark text-light">
+      <div class="col-6">
+          <h1> TREP</h1>
+      </div>
+      <div class="col-6">
+          <h1> COMPUTO</h1>
+      </div>
+  </div>
+  <div *ngIf="items">
+    <div class="row p-2" *ngFor="let item of items">
+      <div class="col-2">
+        <h3> MESA: {{ item }}</h3>
+        <diV >
+          <table class="table table-light table-sm table-bordered" *ngIf="data[item ] | async as item">         
+              <tbody>
+                <tr *ngFor="let votos of item.resulActa.resul" class="p-0">
+                  <th scope="row">{{ votos.sigla }}</th>
+                  <td>{{ votos.votos }}</td>
+                </tr>
+              </tbody>
+            </table>
+        </diV>
+      </div>
+      <div class="col-4 p-2 bg-info">
+        <img src="https://trep.oep.org.bo/resul/imgActa/{{ item }}1.jpg" width="100%"/>
+      </div>
+      <div class="col-4 p-2 bg-danger">
+        <img src="https://computo.oep.org.bo/resul/imgActa/{{ item }}1.jpg" width="100%"/>
+      </div>
+      <div class="col-2">
+          <h3> MESA: {{ item }}</h3>
+          <diV >
+            <table class="table table-light table-sm table-bordered" *ngIf="dataComp[item ] | async as item">         
+                <tbody>
+                  <tr *ngFor="let votos of item.resulActa.resul" class="p-0">
+                    <th scope="row">{{ votos.sigla }}</th>
+                    <td>{{ votos.votos }}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </diV>
+        </div>
+    </div>
+  </div>  
+</div>
+
+<router-outlet></router-outlet>
